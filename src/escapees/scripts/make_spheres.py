@@ -6,11 +6,20 @@ from escapees.coord_funcs import uvw_to_vT, radecplxuvw_to_vT, xyzuvw
 
 r_clu_cols = ["name", "x", "y", "z", "u", "v", "w"]
 
-r_clu = pd.read_csv("clu_params.csv")[r_clu_cols]
+r_clu = pd.read_csv("../data/clu_params.csv")[r_clu_cols]
 
 sphere_rad = 180
 
-vTcols = ["vra", "vdec", "proj_vra", "proj_vdec", "delta_vra", "delta_vdec", "delta_vT"]
+vTcols = [
+    "vra",
+    "vdec",
+    "proj_vra",
+    "proj_vdec",
+    "proj_vrad",
+    "delta_vra",
+    "delta_vdec",
+    "delta_vT",
+]
 
 con = duckdb.connect()
 
@@ -30,9 +39,10 @@ for name, clu_x, clu_y, clu_z, clu_u, clu_v, clu_w in tqdm(
     print(f"Starting query for {name}")
     df = con.execute(query).df()
     print("Query done!")
+    df["sphere_name"] = name
 
-    cube_xyz = df[["X", "Y", "Z"]].to_numpy()
-    df["dist_from_cluster"] = np.linalg.norm(cube_xyz - clu_xyz, axis=1)
+    sphere_xyz = df[["X", "Y", "Z"]].to_numpy()
+    df["dist_from_cluster"] = np.linalg.norm(sphere_xyz - clu_xyz, axis=1)
 
     clu_uvw = np.tile([clu_u, clu_v, clu_w], (len(df), 1))
 
@@ -49,7 +59,7 @@ for name, clu_x, clu_y, clu_z, clu_u, clu_v, clu_w in tqdm(
 
     print(f"Saving to {name}.parquet")
 
-    pq_path = f"/Volumes/travelpassport/tables/spheres/{name}.parquet"
+    pq_path = f"/Volumes/travelpassport/spheres/{name}.parquet"
 
     df.to_parquet(pq_path, compression="snappy")
     print("Done!")
