@@ -3,20 +3,17 @@ name = "escapees"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.11"
 dependencies = [
     "astropy>=7.2.0",
-    "duckdb>=1.5.1",
-    "fastparquet>=2026.3.0",
-    "jupyter>=1.1.1",
-    "marimo>=0.22.0",
-    "numpy>=2.4.4",
-    "pandas>=3.0.2",
-    "pyarrow>=23.0.1",
-    "scipy>=1.17.1",
-    "tqdm>=4.67.3",
+    "astroquery>=0.4.11",
+    "duckdb>=1.5.3",
+    "fastparquet>=2026.5.0",
+    "ipykernel>=7.3.0",
+    "matplotlib>=3.11.0",
+    "numpy>=2.4.6",
+    "pandas>=3.0.3",
+    "pyarrow>=24.0.0",
+    "tables>=3.11.1",
+    "tqdm>=4.68.2",
 ]
-
-[tool.setuptools.packages.find]
-where = ["src"]
-include = ["escapees*"]

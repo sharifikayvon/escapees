@@ -9,5 +9,5 @@ wheels/
 # Virtual environments
 .venv
 
-# Big files
-src/escapees/data/
+# macOS
+.DS_Store

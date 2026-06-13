@@ -10,9 +10,9 @@ def xyzuvw(ra, dec, parallax, pmra, pmdec, radial_velocity):
 
     import numpy as np
     import astropy.units as u
-    from astropy.coordinates import SkyCoord, Galactic
+    import astropy.coordinates as apycoords
 
-    coords = SkyCoord(
+    coords = apycoords.SkyCoord(
         ra=ra * u.deg,
         dec=dec * u.deg,
         distance=1000 / parallax * u.pc,
